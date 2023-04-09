@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://cf4ls51o6f8mr"]
+[gd_scene load_steps=9 format=3 uid="uid://cf4ls51o6f8mr"]
 
 [ext_resource type="Texture2D" uid="uid://xwux1ndcoifr" path="res://tilemap.png" id="1_3mdsp"]
 [ext_resource type="Texture2D" uid="uid://3xsewno0rakj" path="res://icon.svg" id="2_3q7jj"]
+[ext_resource type="Script" path="res://AnimationPlayer.gd" id="3_7s5y5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fnwpe"]
 texture = ExtResource("1_3mdsp")
@@ -153,6 +154,27 @@ sources/0 = SubResource("TileSetAtlasSource_fnwpe")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_whhp1"]
 size = Vector2(129.281, 130.628)
 
+[sub_resource type="Animation" id="Animation_02n5b"]
+resource_name = "Move"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1, 2.1, 4.1, 5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(466, 70), Vector2(293, 72), Vector2(618, 69), Vector2(463, 72)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_t6n5a"]
+_data = {
+"Move": SubResource("Animation_02n5b")
+}
+
 [node name="Node2D" type="Node2D"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -165,7 +187,7 @@ format = 2
 layer_0/tile_data = PackedInt32Array(131073, 262144, 1, 196609, 262144, 1, 262145, 262144, 1, 327681, 0, 3, 327682, 65536, 3, 327683, 65536, 3, 327684, 65536, 3, 327685, 65536, 3, 327686, 65536, 3, 327687, 65536, 3, 327688, 65536, 3, 327689, 65536, 3, 327690, 65536, 3, 327691, 65536, 3, 327692, 196608, 3, 131084, 196608, 2, 196620, 196608, 2, 262156, 196608, 2, 65548, 458752, 0, 65537, 262144, 0, 65538, 327680, 0, 65539, 327680, 0, 65540, 327680, 0, 65541, 65536, 6, 65542, 131072, 6, 65543, 327680, 0, 65544, 327680, 0, 65545, 393216, 0, 65546, 393216, 0, 65547, 393216, 0, 131074, 131072, 2, 196610, 131072, 2, 262146, 131072, 2, 131075, 131072, 2, 196611, 131072, 2, 262147, 131072, 2, 131076, 131072, 2, 196612, 131072, 2, 262148, 131072, 2, 131077, 131072, 2, 196613, 131072, 2, 262149, 131072, 2, 131078, 131072, 2, 196614, 131072, 2, 262150, 131072, 2, 131079, 131072, 2, 196615, 131072, 2, 262151, 131072, 2, 131080, 131072, 2, 196616, 131072, 2, 262152, 131072, 2, 131081, 131072, 2, 196617, 131072, 2, 262153, 131072, 2, 131082, 131072, 2, 196618, 131072, 2, 262154, 131072, 2, 131083, 131072, 2, 196619, 131072, 2, 262155, 131072, 2)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(263, 72)
+position = Vector2(466, 70)
 scale = Vector2(0.421875, 0.421875)
 texture = ExtResource("2_3q7jj")
 
@@ -175,3 +197,10 @@ texture = ExtResource("2_3q7jj")
 visible = false
 position = Vector2(0, -1.52588e-05)
 shape = SubResource("RectangleShape2D_whhp1")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Move"
+libraries = {
+"": SubResource("AnimationLibrary_t6n5a")
+}
+script = ExtResource("3_7s5y5")
