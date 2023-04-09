@@ -1,0 +1,106 @@
+[gd_scene load_steps=8 format=3 uid="uid://cmrulqb3x5jek"]
+
+[ext_resource type="Shader" path="res://ColorRect.gdshader" id="1_bmfvl"]
+[ext_resource type="PackedScene" uid="uid://cf4ls51o6f8mr" path="res://Game.tscn" id="1_kn0dt"]
+[ext_resource type="Script" path="res://Projector.gd" id="3_wbbgk"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tyuoe"]
+shader = ExtResource("1_bmfvl")
+
+[sub_resource type="Animation" id="Animation_kxk3b"]
+resource_name = "Flip"
+length = 2.0
+tracks/0/type = "rotation_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, -0.707107, 2.4663e-16, 2.4663e-16, 0.707107, 1, 1, 0, 0, 0, 1)
+tracks/1/type = "rotation_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Node/Node3D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0.707107, -1.35106e-15, -1.35106e-15, 0.707107, 1, 1, 0, 0, 0, 1)
+tracks/2/type = "rotation_3d"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Node3D2")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = PackedFloat32Array(0, 1, -0.707107, 2.4663e-16, 2.4663e-16, 0.707107, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wc6rf"]
+_data = {
+"Flip": SubResource("Animation_kxk3b")
+}
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_1v52g"]
+viewport_path = NodePath("Viewport")
+
+[node name="Root" type="Node3D"]
+
+[node name="Viewport" type="SubViewport" parent="."]
+process_mode = 3
+disable_3d = true
+transparent_bg = true
+size = Vector2i(1024, 512)
+size_2d_override_stretch = true
+render_target_update_mode = 4
+
+[node name="Node2D" parent="Viewport" instance=ExtResource("1_kn0dt")]
+
+[node name="ColorRect" type="ColorRect" parent="Viewport"]
+material = SubResource("ShaderMaterial_tyuoe")
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Node" type="Node3D" parent="."]
+
+[node name="Node3D" type="Node3D" parent="Node"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08011e-12, 0.403)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Node/Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 0.25, 2.08165e-12)
+size = Vector3(0.4, 0.5, 0.01)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Node"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 0.5)
+size = Vector3(2, 0.01, 1)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 0.5, 0)
+size = Vector3(2, 1, 0.012)
+
+[node name="Node3D2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 0.5, 2.08165e-12)
+
+[node name="1" type="CSGBox3D" parent="Node3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 0.2)
+size = Vector3(0.4, 0.01, 0.4)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_wc6rf")
+}
+
+[node name="Projector" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.96422, 0.265102, 0, -0.265102, 0.96422, -0.107448, 1.70893, 5.29259)
+light_energy = 16.0
+light_projector = SubResource("ViewportTexture_1v52g")
+shadow_enabled = true
+spot_range = 14.7475
+spot_angle = 5.69755
+script = ExtResource("3_wbbgk")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.954026, 0.0625412, -0.293126, 2.2217e-17, 0.977988, 0.208663, 0.299724, -0.19907, 0.933026, -0.574981, 0.754964, 2.06749)
+current = true
+
+[node name="Projector Light" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.0923359, 0.995728, 0, -0.995728, -0.0923359, -0.104222, 0.517908, 4.92393)
+shadow_enabled = true
+spot_range = 28.0137
+spot_angle = 23.8816
