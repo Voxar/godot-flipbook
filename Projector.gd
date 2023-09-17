@@ -3,11 +3,7 @@ extends SpotLight3D
 var timer = Timer.new()
 
 func _ready():
-	timer.connect("timeout", self.timeout)
-	timer.wait_time = 0.1;
-	timer.one_shot = false
-	add_child(timer)
-	timer.start()
+	pass
 
 var time = 0
 var tt = 0
@@ -25,14 +21,8 @@ func _process(delta):
 			tt = time + randf_range(0.02, 0.1)
 	elif time < 5:
 		self.light_energy = 20
+	update_projection();
 	
-func timeout():
-	var vpt = ($"../Viewport" as SubViewport)
-	vpt.set_process(true)
-	vpt.set_update_mode(SubViewport.UPDATE_ALWAYS)
-	var tex = vpt.get_texture();
-	self.set_process(true)
-	self.light_projector = tex;
-	var b = $"../World/Node/Node3D/CSGBox3D4"
-	
-
+func update_projection():
+	self.light_projector = null;
+	self.light_projector = %Viewport.get_texture();

@@ -157,6 +157,7 @@ size = Vector2(129.281, 130.628)
 [sub_resource type="Animation" id="Animation_02n5b"]
 resource_name = "Move"
 length = 5.0
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
