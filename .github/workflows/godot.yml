@@ -8,7 +8,7 @@ env:
   GODOT_VERSION: 4.1.1
   EXPORT_NAME: Flipbook
   # Set up these as Github Secrets:
-  # ITCHIO_UPLOAD_KEY (the "butler" api key)
+  # ITCHIO_API_KEY
   # ITCHIO_USERNAME
   # ITCHIO_GAME
 
@@ -28,7 +28,9 @@ jobs:
           mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
 
       - name: Web Build
-        run: godot --headless -v --export-release "HTML5" ./build/web/index.html
+        run: |
+          mkdir -p build/web
+          godot --headless -v --export-release "Web" ./build/web/index.html
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
@@ -38,5 +40,5 @@ jobs:
 
       - name: Itch.io
         env: 
-          BUTLER_API_KEY: ${{ secrets.ITCHIO_UPLOAD_KEY }}
+          BUTLER_API_KEY: ${{ secrets.ITCHIO_API_KEY }}
         run: butler push ./build/web ${{ secrets.ITCHIO_USERNAME }}/${{ secrets.ITCHIO_GAME }}:web
